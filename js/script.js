@@ -9,7 +9,7 @@ let     computerScore       = 0;
 
 const getComputerChoice = () => 
 {
-    let randomChoice = Math.floor(Math.random() * moves.length.toString());
+    let randomChoice = Math.floor(Math.random() * moves.length);
     return moves[randomChoice];
 };
 
@@ -38,34 +38,64 @@ const playRound         = (humanChoice, computerChoice) =>
 
     if 
     (
-        humanSelection == moves[0] && computerSelection == moves[2] ||
-        humanSelection == moves[1] && computerSelection == moves[0] ||
-        humanSelection == moves[2] && computerSelection == moves[1]
+        humanChoice == moves[0] && computerChoice == moves[2] ||
+        humanChoice == moves[1] && computerChoice == moves[0] ||
+        humanChoice == moves[2] && computerChoice == moves[1]
     )
     {
         humanScore++;
-        return winMessage + " " + `${humanSelection.charAt(0).toUpperCase().slice() + humanSelection.slice(1)} beats ${computerSelection}.`;
+        console.log(humanScore);
+        console.log(winMessage + " " + `${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice}.`);
     }
     else if 
     (
-        humanSelection == moves[0] && computerSelection == moves[1] ||
-        humanSelection == moves[1] && computerSelection == moves[2] ||
-        humanSelection == moves[2] && computerSelection == moves[0]
+        humanChoice == moves[0] && computerChoice == moves[1] ||
+        humanChoice == moves[1] && computerChoice == moves[2] ||
+        humanChoice == moves[2] && computerChoice == moves[0]
     )
     {
         computerScore++;
-        return loseMessage  + " " + `${humanSelection.charAt(0).toUpperCase() + humanSelection.slice(1)} is beaten by ${computerSelection}.`;
+        console.log(computerScore);
+        console.log(loseMessage  + " " + `${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} is beaten by ${computerChoice}.`);
     }
     else
     {
-        return tieMessage;
+        console.log(tieMessage);
+        return;
     }
 }
 
-const   humanSelection      = getHumanChoice();
-const   computerSelection   = getComputerChoice();
+const playGame = () => 
+    {
+        for (let i = 0; i < 5; i++)
+        {
+            const humanSelection    = getHumanChoice();
+            if (!humanSelection)
+            {
+                console.log("Invalid input. Skipping the round.")
+                continue;
+            }
 
-if (humanSelection) 
-{
-    console.log(playRound(humanSelection, computerSelection));
-}
+            const computerSelection = getComputerChoice();
+
+            playRound(humanSelection, computerSelection);
+            console.log(`Round ${i + 1}: Human Score = ${humanScore}, Computer Score = ${computerScore}`);
+
+        }
+    
+        if (humanScore > computerScore)
+        {
+            console.log("Game over! You win!");
+        }
+        else if (computerScore > humanScore)
+        {
+            console.log("Game over! You lose!");
+        }
+        else
+        {
+            console.log("Game over! It's a tie!");
+        }
+    }
+
+    playGame();
+    
