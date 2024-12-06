@@ -13,24 +13,21 @@ const getComputerChoice = () =>
     return moves[randomChoice];
 };
 
-console.log(getComputerChoice());
-
 
 const getHumanChoice    = () => 
 {
     let action = prompt("What is your move?");
 
-    if (action != ("rock" || "paper" || "scissors"))
+    if (!["rock", "paper", "scissors"].includes(action))
     {
         alert("You may only enter the words 'rock', 'paper' or 'scissors'!");
+        return null;
     }
     else
     {
         return action;
     }
 }
-
-console.log(getHumanChoice());
 
 
 const playRound         = (humanChoice, computerChoice) =>
@@ -47,7 +44,7 @@ const playRound         = (humanChoice, computerChoice) =>
     )
     {
         humanScore++;
-        return winMessage   + `${humanSelection} beats ${computerSelection}.`;
+        return winMessage + " " + `${humanSelection.charAt(0).toUpperCase().slice() + humanSelection.slice(1)} beats ${computerSelection}.`;
     }
     else if 
     (
@@ -57,7 +54,7 @@ const playRound         = (humanChoice, computerChoice) =>
     )
     {
         computerScore++;
-        return loseMessage  + `${humanSelection} is beaten by ${computerSelection}.`;
+        return loseMessage  + " " + `${humanSelection.charAt(0).toUpperCase() + humanSelection.slice(1)} is beaten by ${computerSelection}.`;
     }
     else
     {
@@ -68,5 +65,7 @@ const playRound         = (humanChoice, computerChoice) =>
 const   humanSelection      = getHumanChoice();
 const   computerSelection   = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
-console.log(playRound(humanSelection, computerSelection));
+if (humanSelection) 
+{
+    console.log(playRound(humanSelection, computerSelection));
+}
