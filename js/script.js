@@ -1,10 +1,11 @@
+const   results             =   document.getElementById("results");
 const   moves               =   [
                                 "rock", 
                                 "paper", 
                                 "scissors"
                                 ];
-let     humanScore          = 0;
-let     computerScore       = 0;
+let     humanScore          =   0;
+let     computerScore       =   0;
 
 
 const getComputerChoice = () => 
@@ -14,19 +15,9 @@ const getComputerChoice = () =>
 };
 
 
-const getHumanChoice    = () => 
+const getHumanChoice    = (indexOfArray) => 
 {
-    let action = prompt("What is your move?");
-
-    if (!["rock", "paper", "scissors"].includes(action))
-    {
-        alert("You may only enter the words 'rock', 'paper' or 'scissors'!");
-        return null;
-    }
-    else
-    {
-        return action;
-    }
+   return moves[indexOfArray];
 }
 
 
@@ -44,8 +35,8 @@ const playRound         = (humanChoice, computerChoice) =>
     )
     {
         humanScore++;
-        console.log(humanScore);
-        console.log(winMessage + " " + `${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice}.`);
+        results.innerHTML += `${humanScore}`;
+        results.innerHTML += `${winMessage} ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice}.`;
     }
     else if 
     (
@@ -55,47 +46,54 @@ const playRound         = (humanChoice, computerChoice) =>
     )
     {
         computerScore++;
-        console.log(computerScore);
-        console.log(loseMessage  + " " + `${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} is beaten by ${computerChoice}.`);
+        results.innerHTML += `${computerScore}`;
+        results.innerHTML += `${loseMessage} ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} is beaten by ${computerChoice}.`;
     }
     else
     {
-        console.log(tieMessage);
+        results.innerHTML += `${tieMessage}`;
         return;
     }
 }
 
 const playGame = () => 
+{
+    
+    
+    if (humanScore > computerScore)
     {
-        for (let i = 0; i < 5; i++)
-        {
-            const humanSelection    = getHumanChoice();
-            if (!humanSelection)
-            {
-                console.log("Invalid input. Skipping the round.")
-                continue;
-            }
-
-            const computerSelection = getComputerChoice();
-
-            playRound(humanSelection, computerSelection);
-            console.log(`Round ${i + 1}: Human Score = ${humanScore}, Computer Score = ${computerScore}`);
-
-        }
-    
-        if (humanScore > computerScore)
-        {
-            console.log("Game over! You win!");
-        }
-        else if (computerScore > humanScore)
-        {
-            console.log("Game over! You lose!");
-        }
-        else
-        {
-            console.log("Game over! It's a tie!");
-        }
+        results.innerText = "Game over! You win!";
     }
+    else if (computerScore > humanScore)
+    {
+        results.innerText = "Game over! You lose!";
+    }
+    else
+    {
+        results.innerText = "Game over! It's a tie!";
+    }
+};
 
-    playGame();
-    
+document.getElementById("rock").addEventListener('click', () => 
+{
+    let humanChoice     = getHumanChoice(0);
+    let computerChoice  = getComputerChoice();
+
+    playRound(humanChoice, computerChoice);
+});
+
+document.getElementById("paper").addEventListener('click', () => 
+{
+    let humanChoice     = getHumanChoice(0);
+    let computerChoice  = getComputerChoice();
+
+    playRound(humanChoice, computerChoice);
+});
+
+document.getElementById("scissors").addEventListener('click', () => 
+{
+    let humanChoice     = getHumanChoice(0);
+    let computerChoice  = getComputerChoice();
+
+    playRound(humanChoice, computerChoice);
+});
